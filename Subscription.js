@@ -48,7 +48,13 @@ function appendSubscriptionRow(sheet, result, i) {
 
 function sortSubscription(sheet) {
   var sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
-  sortRange.sort([{column: 9, ascending: false},{column: 8, ascending: false}]);
+  sortRange.sort([{
+    column: 9,
+    ascending: false
+  }, {
+    column: 8,
+    ascending: false
+  }]);
 }
 
 function setSubscriptionFilter(sheet) {

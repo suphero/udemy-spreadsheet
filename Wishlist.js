@@ -46,7 +46,10 @@ function appendWishlistRow(sheet, result, i) {
 
 function sortWishlist(sheet) {
   var sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
-  sortRange.sort([{column: 8, ascending: false}]);
+  sortRange.sort([{
+    column: 8,
+    ascending: false
+  }]);
 }
 
 function setWishlistFilter(sheet) {
