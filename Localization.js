@@ -49,7 +49,7 @@ var tr = {
     bearer_token_not_exist: 'Bearer Jetonu bulunmuyor, lütfen "Udemy -> Bearer Jetonunu Güncelle" menüsünden jeton tanımı yapın',
     enter_bearer_token: 'Bearer jetonunu girin',
     enter_bearer_token_current_token_is: 'Bearer jetonunu girin, mevcut jeton: ',
-    token_changed: "Jeton değişti"
+    token_changed: 'Jeton değişti'
 };
 
 function getText(key) {
