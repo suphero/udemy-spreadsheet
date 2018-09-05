@@ -1,11 +1,11 @@
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('Udemy')
-    .addItem('Update All', 'updateAll')
+    .addItem(getText('update_all'), 'updateAll')
     .addSeparator()
-    .addItem('Update Wishlist', 'updateWishlist')
-    .addItem('Update Subscription List', 'updateSubscriptionList')
-    .addItem('Change Bearer Token', 'openBearerTokenDialog')
+    .addItem(getText('update_wishlist'), 'updateWishlist')
+    .addItem(getText('update_subscription_list'), 'updateSubscriptionList')
+    .addItem(getText('change_bearer_token'), 'openBearerTokenDialog')
     .addToUi();
 }
 
@@ -20,9 +20,9 @@ function openBearerTokenDialog() {
   var oldToken = getToken();
   var message;
   if (oldToken) {
-    message = "Enter your Bearer token, your current token is: " + oldToken;
+    message = getText('enter_bearer_token_current_token_is') + oldToken;
   } else {
-    message = "Enter your Bearer token";
+    message = getText('enter_bearer_token');
   }
   
   var result = ui.prompt(message);
@@ -32,6 +32,6 @@ function openBearerTokenDialog() {
   if (button == ui.Button.OK) {
 
     setToken(newToken);
-    ui.alert('Your token changed from "' + oldToken + '" to "' + newToken + '".');
+    ui.alert(getText('token_changed'));
   }
 }

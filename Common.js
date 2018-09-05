@@ -37,5 +37,5 @@ function setToken(token) {
 function checkTokenExistence() {
   var token = getToken();
   if (token != null) return;
-  throw ('Bearer Token does not exist, please change token at "Udemy -> Change Bearer Token"');
+  throw (getText('bearer_token_not_exist'));
 }

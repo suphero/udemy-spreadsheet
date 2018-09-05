@@ -2,7 +2,7 @@ function updateWishlist() {
   checkTokenExistence();
   var data = getWishlist();
   var header = getWishlistHeader();
-  var sheet = prepareSheet('Wishlist');
+  var sheet = prepareSheet(getText('wishlist'));
   prepareHeader(sheet, header);
   prepareWishlistData(sheet, data);
   sortWishlist(sheet);
@@ -11,15 +11,15 @@ function updateWishlist() {
 
 function getWishlistHeader() {
   return [
-    'Title',
-    'Url',
-    'Lectures',
-    'Content Length',
-    'Last Update',
-    'Subscribers',
-    'Reviews',
-    'Rating',
-    'Price'
+    getText('title'),
+    getText('url'),
+    getText('lectures'),
+    getText('content_length'),
+    getText('last_update'),
+    getText('subscribers'),
+    getText('reviews'),
+    getText('rating'),
+    getText('price'),
   ];
 }
 

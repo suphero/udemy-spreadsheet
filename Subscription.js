@@ -2,7 +2,7 @@ function updateSubscriptionList() {
   checkTokenExistence();
   var data = getSubscription();
   var header = getSubscriptionHeader();
-  var sheet = prepareSheet('Subscription');
+  var sheet = prepareSheet(getText('subscription'));
   prepareHeader(sheet, header);
   prepareSubscriptionData(sheet, data);
   sortSubscription(sheet);
@@ -11,16 +11,16 @@ function updateSubscriptionList() {
 
 function getSubscriptionHeader() {
   return [
-    'Title',
-    'Url',
-    'Lectures',
-    'Content Length',
-    'Last Update',
-    'Subscribers',
-    'Reviews',
-    'Rating',
-    'Completion Ratio',
-    'Is Draft'
+    getText('title'),
+    getText('url'),
+    getText('lectures'),
+    getText('content_length'),
+    getText('last_update'),
+    getText('subscribers'),
+    getText('reviews'),
+    getText('rating'),
+    getText('completion_ratio'),
+    getText('is_draft')
   ];
 }
 
