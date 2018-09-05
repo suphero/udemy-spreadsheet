@@ -1,5 +1,3 @@
-import 'google-apps-script';
-
 function getWishlist() {
   var token = getToken();
   var params = {method:"GET",

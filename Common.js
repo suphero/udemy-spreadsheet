@@ -1,5 +1,3 @@
-import 'google-apps-script';
-
 function prepareSheet(sheetName) {
   var spreadSheet = SpreadsheetApp.getActive();
   var oldSheet = spreadSheet.getSheetByName(sheetName);

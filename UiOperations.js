@@ -1,5 +1,3 @@
-import 'google-apps-script';
-
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('Udemy')

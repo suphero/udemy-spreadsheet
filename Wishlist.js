@@ -1,5 +1,3 @@
-import 'google-apps-script';
-
 function updateWishlist() {
   checkTokenExistence();
   var data = getWishlist();
@@ -20,7 +18,8 @@ function getWishlistHeader() {
     'Last Update',
     'Subscribers',
     'Reviews',
-    'Rating'
+    'Rating',
+    'Price'
   ];
 }
 
@@ -39,7 +38,8 @@ function appendWishlistRow(sheet, result, i) {
     result.last_update_date,
     result.num_subscribers,
     result.num_reviews,
-    result.rating
+    result.rating,
+    result.discount.price.amount
   ];
   appendRow(sheet, row, i);
 }

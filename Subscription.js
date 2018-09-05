@@ -1,5 +1,3 @@
-import 'google-apps-script';
-
 function updateSubscriptionList() {
   checkTokenExistence();
   var data = getSubscription();
