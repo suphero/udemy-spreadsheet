@@ -1,18 +1,51 @@
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('Udemy')
-    .addItem(getText('update_all'), 'updateAll')
+    .addItem(getText('update_all'), 'updateAllUI')
     .addSeparator()
-    .addItem(getText('update_wishlist'), 'updateWishlist')
-    .addItem(getText('update_subscription_list'), 'updateSubscriptionList')
-    .addItem(getText('change_bearer_token'), 'openBearerTokenDialog')
+    .addItem(getText('update_wishlist'), 'updateWishlistUI')
+    .addItem(getText('update_subscription_list'), 'updateSubscriptionListUI')
+    .addItem(getText('change_bearer_token'), 'openBearerTokenDialogUI')
     .addToUi();
 }
 
-function updateAll() {
-  checkTokenExistence();
-  updateWishlist();
-  updateSubscriptionList();
+function updateAllUI() {
+  try {
+    checkTokenExistence();
+    updateWishlist();
+    updateSubscriptionList();
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+function updateWishlistUI() {
+  try {
+    updateWishlist();
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+function updateSubscriptionListUI() {
+  try {
+    updateSubscriptionList();
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+function openBearerTokenDialogUI() {
+  try {
+    openBearerTokenDialog();
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+function handleError(error) {
+  var ui = SpreadsheetApp.getUi();
+  ui.alert(error);
 }
 
 function openBearerTokenDialog() {
@@ -24,11 +57,11 @@ function openBearerTokenDialog() {
   } else {
     message = getText('enter_bearer_token');
   }
-  
+
   var result = ui.prompt(message);
   var button = result.getSelectedButton();
   var newToken = result.getResponseText();
-  
+
   if (button == ui.Button.OK) {
 
     setToken(newToken);
