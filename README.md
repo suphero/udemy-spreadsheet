@@ -1,6 +1,6 @@
 # Udemy Google Spreadsheet Addon
 
-Manage your Wishlist and Subscription on Google Spreadsheet to decide what you will buy and and you will learn next.
+Manage your Udemy Wishlist and Subscription on Google Spreadsheet to decide what you will buy and and you will learn next.
 
 - Install add-on
 - Set your Bearer token at "Add-ons -> Udemy Wishlist and Subscription Manager -> Change Bearer Token" menu
