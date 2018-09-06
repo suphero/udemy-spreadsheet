@@ -11,7 +11,6 @@ function onOpen() {
 
 function updateAllUI() {
   try {
-    checkTokenExistence();
     updateWishlist();
     updateSubscriptionList();
   } catch (error) {

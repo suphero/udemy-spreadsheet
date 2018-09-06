@@ -17,7 +17,8 @@ function getWishlist() {
   var pageSize = "100";
 
   var url = baseUrl + "?fields%5Bcourse%5D=" + fieldsCourse + "&fields%5Buser%5D=" + fieldsUser + "&include_spam=" + includeSpam + "&page=" + page + "&page_size=" + pageSize;
-  return getWholeData(url, params);
+  var result = getWholeData(url, params);
+  return result;
 }
 
 function getSubscription() {
@@ -39,15 +40,19 @@ function getSubscription() {
   var pageSize = "100";
 
   var url = baseUrl + "?fields%5Bcourse%5D=" + fieldsCourse + "&fields%5Buser%5D=" + fieldsUser + "&include_spam=" + includeSpam + "&page=" + page + "&page_size=" + pageSize;
-  return getWholeData(url, params);
+  var result = getWholeData(url, params);
+  return result;
 }
 
 function getWholeData(url, params) {
   var results = [];
   do {
     var iterationDataText = UrlFetchApp.fetch(url, params);
+    var responseCode = iterationDataText.getResponseCode();
+    if (responseCode != 200) {
+      throw (iterationDataText);
+    }
     var iterationData = JSON.parse(iterationDataText);
-    Logger.log(iterationDataText);
     results = results.concat(iterationData.results);
     url = iterationData.next;
   }
