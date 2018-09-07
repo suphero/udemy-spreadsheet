@@ -15,3 +15,5 @@
 - Go to Network tab of the Developer Tools
 - Search for Bearer
 - Find your token it should be 40 characters long alphanumeric text
+
+![bearer token](https://user-images.githubusercontent.com/846531/45240750-6b7d3e80-b2f2-11e8-95aa-f0b6ed2998db.png)
