@@ -49,7 +49,7 @@ function getWholeData(url, params) {
   do {
     var iterationDataText = UrlFetchApp.fetch(url, params);
     var responseCode = iterationDataText.getResponseCode();
-    var iterationData = JSON.parse(iterationDataText);
+    var iterationData = JSON.parse(iterationDataText.getContentText());
     if (responseCode != 200) {
       throw (iterationData.detail);
     }
