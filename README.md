@@ -9,8 +9,8 @@
 
 ## Getting Bearer token
 
-- Open Developer tools from your favorite Browser
 - Go to [udemy.com](https://www.udemy.com/)
+- Open Developer tools from your favorite Browser
 - Login if you haven't
 - Go to Network tab of the Developer Tools
 - Search for Bearer
