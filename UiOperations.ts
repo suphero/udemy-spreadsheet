@@ -62,7 +62,6 @@ function openBearerTokenDialog() {
   var newToken = result.getResponseText();
 
   if (button == ui.Button.OK) {
-
     setToken(newToken);
     ui.alert(getText('token_changed'));
   }
