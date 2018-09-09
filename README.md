@@ -2,7 +2,7 @@
 
 ## Usage
 
-- [Install add-on](https://chrome.google.com/webstore/detail/udemy-wishlist-and-subscr/gnfbjmbgidjmaloobjgacphkaaogdjio)
+- Install add-on (Project is currently offline)
 - [Get your Bearer token](#getting-bearer-token)
 - Set your Bearer token at "Add-ons -> Udemy Wishlist and Subscription Manager -> Change Bearer Token" menu
 - Click "Add-ons -> Udemy Wishlist and Subscription Manager -> Update All" button
