@@ -1,8 +1,12 @@
-function updateSubscriptionList() {
+import { appendRow, checkTokenExistence, prepareHeader, prepareSheet } from './Common';
+import { getSubscription } from './ServiceWrapper';
+import { ISubscribedCourse } from './Types';
+
+export function updateSubscriptionList() {
   checkTokenExistence();
-  var data = getSubscription();
-  var header = getSubscriptionHeader();
-  var sheet = prepareSheet(getText('subscription'));
+  const data = getSubscription();
+  const header = getSubscriptionHeader();
+  const sheet = prepareSheet(getText('subscription'));
   prepareHeader(sheet, header);
   prepareSubscriptionData(sheet, data);
   sortSubscription(sheet);
@@ -20,18 +24,18 @@ function getSubscriptionHeader() {
     getText('reviews'),
     getText('rating'),
     getText('completion_ratio'),
-    getText('is_draft')
+    getText('is_draft'),
   ];
 }
 
-function prepareSubscriptionData(sheet, data) {
-  for (var i = 0; i < data.length; i++) {
+function prepareSubscriptionData(sheet: GoogleAppsScript.Spreadsheet.Sheet, data: ISubscribedCourse[]) {
+  for (let i = 0; i < data.length; i++) {
     appendSubscriptionRow(sheet, data[i], i + 2);
   }
 }
 
-function appendSubscriptionRow(sheet, result, i) {
-  var row = [
+function appendSubscriptionRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, result: ISubscribedCourse, i) {
+  const row = [
     result.title,
     result.url,
     result.num_lectures,
@@ -41,33 +45,33 @@ function appendSubscriptionRow(sheet, result, i) {
     result.num_reviews,
     result.rating,
     result.completion_ratio,
-    result.is_draft
+    result.is_draft,
   ];
   appendRow(sheet, row, i);
 }
 
-function sortSubscription(sheet) {
-  var sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
+function sortSubscription(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+  const sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
   sortRange.sort([{
+    ascending: false,
     column: 9,
-    ascending: false
   }, {
+    ascending: false,
     column: 8,
-    ascending: false
   }]);
 }
 
-function setSubscriptionFilter(sheet) {
-  var completionRatioCriteriaBuilder = SpreadsheetApp.newFilterCriteria();
+function setSubscriptionFilter(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
+  const completionRatioCriteriaBuilder = SpreadsheetApp.newFilterCriteria();
   completionRatioCriteriaBuilder.whenNumberLessThan(100);
-  var completionRatioCriteria = completionRatioCriteriaBuilder.build();
+  const completionRatioCriteria = completionRatioCriteriaBuilder.build();
 
-  var draftCriteriaBuilder = SpreadsheetApp.newFilterCriteria();
-  draftCriteriaBuilder.setHiddenValues(["TRUE"]);
-  var draftCriteria = draftCriteriaBuilder.build();
+  const draftCriteriaBuilder = SpreadsheetApp.newFilterCriteria();
+  draftCriteriaBuilder.setHiddenValues(['TRUE']);
+  const draftCriteria = draftCriteriaBuilder.build();
 
-  var filterRange = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn());
-  var filter = filterRange.createFilter();
+  const filterRange = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn());
+  const filter = filterRange.createFilter();
   filter.setColumnFilterCriteria(9, completionRatioCriteria);
   filter.setColumnFilterCriteria(10, draftCriteria);
 }

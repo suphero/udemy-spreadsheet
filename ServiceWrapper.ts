@@ -1,56 +1,86 @@
-function getWishlist() {
-  var token = getToken();
-  var params = {
-    method: "GET",
+import { getToken } from './Common';
+import { ISubscribedCourse, IWishlistedCourse } from './Types';
+
+const apiBaseUrl = 'https://www.udemy.com/api-2.0';
+
+export function getWishlist(): IWishlistedCourse[] {
+  const token = getToken();
+  const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     contentType: 'application/json',
     headers: {
-      Authorization: "Bearer " + token
+      Authorization: 'Bearer ' + token,
     },
-    muteHttpExceptions: true
+    method: 'get',
+    muteHttpExceptions: true,
   };
 
-  var baseUrl = "https://www.udemy.com/api-2.0/users/me/wishlisted-courses";
-  var fieldsCourse = "@min,rating,num_reviews,num_subscribers,discount,is_recently_published,rating,num_reviews,num_subscribers,num_lectures,estimated_content_length,last_update_date";
-  var fieldsUser = "@default";
-  var includeSpam = "true";
-  var page = "1";
-  var pageSize = "100";
+  const courseFieldArray = [
+    '@default',
+    'rating',
+    'num_published_lectures',
+    'num_reviews',
+    'num_subscribers',
+    'discount',
+    'estimated_content_length',
+    'last_update_date',
+  ];
+  const courseFields = courseFieldArray.join(',');
+  const queryParams = {
+    'fields[course]': courseFields,
+    'fields[user]': '@default',
+    'page': 1,
+    'page_size': 100,
+  };
+  const queryString = Object.keys(queryParams).map(key => key + '=' + queryParams[key]).join('&');
 
-  var url = baseUrl + "?fields%5Bcourse%5D=" + fieldsCourse + "&fields%5Buser%5D=" + fieldsUser + "&include_spam=" + includeSpam + "&page=" + page + "&page_size=" + pageSize;
-  var result = getWholeData(url, params);
-  return result;
+  const url = `${apiBaseUrl}/users/me/wishlisted-courses/?${queryString}`;
+  Logger.log(url);
+  return getWholeData(url, params);
 }
 
-function getSubscription() {
-  var token = getToken();
-  var params = {
-    method: "GET",
+export function getSubscription(): ISubscribedCourse[] {
+  const token = getToken();
+  const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     contentType: 'application/json',
     headers: {
-      Authorization: "Bearer " + token
+      Authorization: 'Bearer ' + token,
     },
-    muteHttpExceptions: true
+    method: 'get',
+    muteHttpExceptions: true,
   };
 
-  var baseUrl = "https://www.udemy.com/api-2.0/users/me/subscribed-courses";
-  var fieldsCourse = "@min,rating,num_reviews,num_subscribers,discount,is_recently_published,rating,num_reviews,num_subscribers,num_lectures,estimated_content_length,last_update_date,completion_ratio,is_draft";
-  var fieldsUser = "@min,job_title";
-  var includeSpam = "true";
-  var page = "1";
-  var pageSize = "100";
+  const courseFieldArray = [
+    '@min,completion_ratio',
+    'num_lectures',
+    'estimated_content_length',
+    'last_update_date',
+    'num_subscribers',
+    'num_reviews',
+    'rating',
+    'is_draft',
+  ];
+  const courseFields = courseFieldArray.join(',');
+  const queryParams = {
+    'fields[course]': courseFields,
+    'fields[user]': '@min,job_title',
+    'is_archived': false,
+    'page': 1,
+    'page_size': 100,
+  };
+  const queryString = Object.keys(queryParams).map(key => key + '=' + queryParams[key]).join('&');
 
-  var url = baseUrl + "?fields%5Bcourse%5D=" + fieldsCourse + "&fields%5Buser%5D=" + fieldsUser + "&include_spam=" + includeSpam + "&page=" + page + "&page_size=" + pageSize;
-  var result = getWholeData(url, params);
-  return result;
+  const url = `${apiBaseUrl}/users/me/subscribed-courses/?${queryString}`;
+  Logger.log(url);
+  return getWholeData(url, params);
 }
 
-function getWholeData(url, params) {
-  var results = [];
+function getWholeData(url: string, params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions) {
+  let results = [];
   do {
-    var iterationDataText = UrlFetchApp.fetch(url, params);
-    var responseCode = iterationDataText.getResponseCode();
-    var iterationData = JSON.parse(iterationDataText.getContentText());
-    if (responseCode != 200) {
+    const iterationDataText = UrlFetchApp.fetch(url, params);
+    const responseCode = iterationDataText.getResponseCode();
+    const iterationData = JSON.parse(iterationDataText.getContentText());
+    if (responseCode !== 200) {
       throw (iterationData.detail);
     }
     results = results.concat(iterationData.results);

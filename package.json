@@ -1,0 +1,19 @@
+{
+  "name": "udemy-google-spreadsheet-addon",
+  "version": "1.0.0",
+  "description": "## Usage",
+  "main": "index.js",
+  "scripts": {
+		"tslint": "tslint --project tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suphero/Udemy-Google-Spreadsheet-Addon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suphero/Udemy-Google-Spreadsheet-Addon/issues"
+  },
+  "homepage": "https://github.com/suphero/Udemy-Google-Spreadsheet-Addon#readme"
+}

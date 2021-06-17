@@ -1,9 +1,9 @@
-function prepareSheet(sheetName) {
-  var spreadSheet = SpreadsheetApp.getActive();
-  var oldSheet = spreadSheet.getSheetByName(sheetName);
-  var newSheet;
+export function prepareSheet(sheetName: string): GoogleAppsScript.Spreadsheet.Sheet {
+  const spreadSheet = SpreadsheetApp.getActive();
+  const oldSheet = spreadSheet.getSheetByName(sheetName);
+  let newSheet: GoogleAppsScript.Spreadsheet.Sheet;
   if (oldSheet != null) {
-    var index = oldSheet.getIndex();
+    const index = oldSheet.getIndex();
     spreadSheet.deleteSheet(oldSheet);
     newSheet = spreadSheet.insertSheet(sheetName, index - 1);
   } else {
@@ -13,29 +13,28 @@ function prepareSheet(sheetName) {
   return newSheet;
 }
 
-function prepareHeader(sheet, header) {
+export function prepareHeader(sheet: GoogleAppsScript.Spreadsheet.Sheet, header: any[]) {
   appendRow(sheet, header, 1);
 }
 
-function appendRow(sheet, row, i) {
-  var newData = [];
+export function appendRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, row: any[], i: number) {
+  const newData = [];
   newData.push(row);
   sheet.getRange(i, 1, 1, row.length).setValues(newData);
 }
 
-function getToken() {
-  var properties = PropertiesService.getUserProperties();
-  var token = properties.getProperty('token');
-  return token;
+export function getToken() {
+  const properties = PropertiesService.getUserProperties();
+  return properties.getProperty('token');
 }
 
-function setToken(token) {
-  var properties = PropertiesService.getUserProperties();
+export function setToken(token: string) {
+  const properties = PropertiesService.getUserProperties();
   properties.setProperty('token', token);
 }
 
-function checkTokenExistence() {
-  var token = getToken();
-  if (token != null) return;
+export function checkTokenExistence() {
+  const token = getToken();
+  if (token !== null) { return; }
   throw (getText('bearer_token_not_exist'));
 }

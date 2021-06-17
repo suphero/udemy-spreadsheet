@@ -1,11 +1,15 @@
+import { getToken, setToken } from './Common';
+import { updateSubscriptionList } from './Subscription';
+import { updateWishlist } from './Wishlist';
+
 function onOpen() {
-  var ui = SpreadsheetApp.getUi();
+  const ui = SpreadsheetApp.getUi();
   ui.createMenu('Udemy')
-    .addItem(getText('update_all'), 'updateAllUI')
+    .addItem(getText('update_all'), updateAllUI.name)
     .addSeparator()
-    .addItem(getText('update_wishlist'), 'updateWishlistUI')
-    .addItem(getText('update_subscription_list'), 'updateSubscriptionListUI')
-    .addItem(getText('change_bearer_token'), 'openBearerTokenDialogUI')
+    .addItem(getText('update_wishlist'), updateWishlistUI.name)
+    .addItem(getText('update_subscription_list'), updateSubscriptionListUI.name)
+    .addItem(getText('change_bearer_token'), openBearerTokenDialogUI.name)
     .addToUi();
 }
 
@@ -43,25 +47,25 @@ function openBearerTokenDialogUI() {
 }
 
 function handleError(error) {
-  var ui = SpreadsheetApp.getUi();
+  const ui = SpreadsheetApp.getUi();
   ui.alert(error);
 }
 
 function openBearerTokenDialog() {
-  var ui = SpreadsheetApp.getUi();
-  var oldToken = getToken();
-  var message;
+  const ui = SpreadsheetApp.getUi();
+  const oldToken = getToken();
+  let message: string;
   if (oldToken) {
     message = getText('enter_bearer_token_current_token_is') + oldToken;
   } else {
     message = getText('enter_bearer_token');
   }
 
-  var result = ui.prompt(message);
-  var button = result.getSelectedButton();
-  var newToken = result.getResponseText();
+  const result = ui.prompt(message);
+  const button = result.getSelectedButton();
+  const newToken = result.getResponseText();
 
-  if (button == ui.Button.OK) {
+  if (button === ui.Button.OK) {
     setToken(newToken);
     ui.alert(getText('token_changed'));
   }

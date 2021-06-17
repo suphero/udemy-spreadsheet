@@ -1,8 +1,12 @@
-function updateWishlist() {
+import { appendRow, checkTokenExistence, prepareHeader, prepareSheet } from './Common';
+import { getWishlist } from './ServiceWrapper';
+import { IWishlistedCourse } from './Types';
+
+export function updateWishlist() {
   checkTokenExistence();
-  var data = getWishlist();
-  var header = getWishlistHeader();
-  var sheet = prepareSheet(getText('wishlist'));
+  const data = getWishlist();
+  const header = getWishlistHeader();
+  const sheet = prepareSheet(getText('wishlist'));
   prepareHeader(sheet, header);
   prepareWishlistData(sheet, data);
   sortWishlist(sheet);
@@ -23,36 +27,36 @@ function getWishlistHeader() {
   ];
 }
 
-function prepareWishlistData(sheet, data) {
-  for (var i = 0; i < data.length; i++) {
+function prepareWishlistData(sheet, data: IWishlistedCourse[]) {
+  for (let i = 0; i < data.length; i++) {
     appendWishlistRow(sheet, data[i], i + 2);
   }
 }
 
-function appendWishlistRow(sheet, result, i) {
-  var row = [
+function appendWishlistRow(sheet, result: IWishlistedCourse, i) {
+  const row = [
     result.title,
     result.url,
-    result.num_lectures,
+    result.num_published_lectures,
     result.estimated_content_length,
     result.last_update_date,
     result.num_subscribers,
     result.num_reviews,
     result.rating,
-    result.discount.price.amount
+    result.discount?.price?.amount || result.price_detail?.amount,
   ];
   appendRow(sheet, row, i);
 }
 
 function sortWishlist(sheet) {
-  var sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
+  const sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
   sortRange.sort([{
+    ascending: false,
     column: 8,
-    ascending: false
   }]);
 }
 
 function setWishlistFilter(sheet) {
-  var filterRange = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn());
-  var filter = filterRange.createFilter();
+  const filterRange = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn());
+  filterRange.createFilter();
 }
