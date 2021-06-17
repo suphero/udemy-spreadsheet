@@ -18,3 +18,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # projectBaseDir: my-custom-directory
+          args: >
+            -Dsonar.organization=suphero
+            -Dsonar.projectKey=udemy-spreadsheet
+          # -Dsonar.python.coverage.reportPaths=coverage.xml
+          # -Dsonar.sources=lib/
+          # -Dsonar.test.exclusions=tests/**
+          # -Dsonar.tests=tests/
+          # -Dsonar.verbose=true
