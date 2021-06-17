@@ -1,10 +1,12 @@
-name: Build
+name: Deploy
+
 on:
   push:
     branches:
       - master
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -19,12 +21,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          # projectBaseDir: my-custom-directory
           args: >
             -Dsonar.organization=suphero
             -Dsonar.projectKey=udemy-spreadsheet
-          # -Dsonar.python.coverage.reportPaths=coverage.xml
-          # -Dsonar.sources=lib/
-          # -Dsonar.test.exclusions=tests/**
-          # -Dsonar.tests=tests/
-          # -Dsonar.verbose=true
+  clasp:
+    name: clasp deploy
+    # needs: sonarcloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: daikikatsuragawa/clasp-action@v1
+        with:
+          accessToken: ${{ secrets.CLASP_ACCESS_TOKEN }}
+          idToken: ${{ secrets.CLASP_ID_TOKEN }}
+          refreshToken: ${{ secrets.CLASP_REFRESH_TOKEN }}
+          clientId: ${{ secrets.CLASP_CLIENT_ID }}
+          clientSecret: ${{ secrets.CLASP_CLIENT_SECRET }}
+          scriptId: ${{ secrets.CLASP_SCRIPT_ID }}
+          command: 'deploy'
