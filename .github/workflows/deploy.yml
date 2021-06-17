@@ -37,6 +37,15 @@ jobs:
           clientId: ${{ secrets.CLASP_CLIENT_ID }}
           clientSecret: ${{ secrets.CLASP_CLIENT_SECRET }}
           scriptId: ${{ secrets.CLASP_SCRIPT_ID }}
+          rootDir: 'src'
+          command: 'push'
+      - uses: daikikatsuragawa/clasp-action@v1
+        with:
+          accessToken: ${{ secrets.CLASP_ACCESS_TOKEN }}
+          idToken: ${{ secrets.CLASP_ID_TOKEN }}
+          refreshToken: ${{ secrets.CLASP_REFRESH_TOKEN }}
+          clientId: ${{ secrets.CLASP_CLIENT_ID }}
+          clientSecret: ${{ secrets.CLASP_CLIENT_SECRET }}
+          scriptId: ${{ secrets.CLASP_SCRIPT_ID }}
           command: 'deploy'
-          rootDir: './src'
           description: 'Github Action'
