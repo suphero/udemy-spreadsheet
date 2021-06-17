@@ -1,6 +1,6 @@
 import { appendRow, checkTokenExistence, prepareHeader, prepareSheet } from './Common';
 import { getWishlist } from './ServiceWrapper';
-import { IWishlistedCourse } from './Types';
+import { IWishlistedCourse, WishlistEntity } from './Types';
 
 export function updateWishlist() {
   checkTokenExistence();
@@ -27,28 +27,18 @@ function getWishlistHeader() {
   ];
 }
 
-function prepareWishlistData(sheet, data: IWishlistedCourse[]) {
+function prepareWishlistData(sheet: GoogleAppsScript.Spreadsheet.Sheet, data: IWishlistedCourse[]) {
   for (let i = 0; i < data.length; i++) {
     appendWishlistRow(sheet, data[i], i + 2);
   }
 }
 
-function appendWishlistRow(sheet, result: IWishlistedCourse, i) {
-  const row = [
-    result.title,
-    result.url,
-    result.num_published_lectures,
-    result.estimated_content_length,
-    result.last_update_date,
-    result.num_subscribers,
-    result.num_reviews,
-    result.rating,
-    result.discount?.price?.amount || result.price_detail?.amount,
-  ];
-  appendRow(sheet, row, i);
+function appendWishlistRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, result: IWishlistedCourse, row: number) {
+  const rows = new WishlistEntity(result).getRow();
+  appendRow(sheet, rows, row);
 }
 
-function sortWishlist(sheet) {
+function sortWishlist(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
   const sortRange = sheet.getRange(2, 1, sheet.getLastRow(), sheet.getLastColumn());
   sortRange.sort([{
     ascending: false,
@@ -56,7 +46,7 @@ function sortWishlist(sheet) {
   }]);
 }
 
-function setWishlistFilter(sheet) {
+function setWishlistFilter(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
   const filterRange = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn());
   filterRange.createFilter();
 }

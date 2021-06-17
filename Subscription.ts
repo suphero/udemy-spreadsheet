@@ -1,6 +1,6 @@
 import { appendRow, checkTokenExistence, prepareHeader, prepareSheet } from './Common';
 import { getSubscription } from './ServiceWrapper';
-import { ISubscribedCourse } from './Types';
+import { ISubscribedCourse, SubscriptionEntity } from './Types';
 
 export function updateSubscriptionList() {
   checkTokenExistence();
@@ -34,20 +34,9 @@ function prepareSubscriptionData(sheet: GoogleAppsScript.Spreadsheet.Sheet, data
   }
 }
 
-function appendSubscriptionRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, result: ISubscribedCourse, i) {
-  const row = [
-    result.title,
-    result.url,
-    result.num_lectures,
-    result.estimated_content_length,
-    result.last_update_date,
-    result.num_subscribers,
-    result.num_reviews,
-    result.rating,
-    result.completion_ratio,
-    result.is_draft,
-  ];
-  appendRow(sheet, row, i);
+function appendSubscriptionRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, result: ISubscribedCourse, row: number) {
+  const rows = new SubscriptionEntity(result).getRow();
+  appendRow(sheet, rows, row);
 }
 
 function sortSubscription(sheet: GoogleAppsScript.Spreadsheet.Sheet) {

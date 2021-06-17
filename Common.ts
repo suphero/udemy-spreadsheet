@@ -17,10 +17,10 @@ export function prepareHeader(sheet: GoogleAppsScript.Spreadsheet.Sheet, header:
   appendRow(sheet, header, 1);
 }
 
-export function appendRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, row: any[], i: number) {
+export function appendRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, rows: any[], row: number) {
   const newData = [];
-  newData.push(row);
-  sheet.getRange(i, 1, 1, row.length).setValues(newData);
+  newData.push(rows);
+  sheet.getRange(row, 1, 1, rows.length).setValues(newData);
 }
 
 export function getToken() {

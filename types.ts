@@ -57,3 +57,48 @@ export interface ISubscribedCourse {
   last_update_date: string;
   is_draft: boolean;
 }
+
+export class WishlistEntity {
+  course: IWishlistedCourse;
+
+  constructor(course: IWishlistedCourse) {
+    this.course = course;
+  }
+
+  public getRow(): any[] {
+    return [
+      this.course.title,
+      this.course.url,
+      this.course.num_published_lectures,
+      this.course.estimated_content_length,
+      this.course.last_update_date,
+      this.course.num_subscribers,
+      this.course.num_reviews,
+      this.course.rating,
+      this.course.discount?.price?.amount || this.course.price_detail?.amount,
+    ]
+  }
+}
+
+export class SubscriptionEntity {
+  course : ISubscribedCourse;
+
+  constructor(course: ISubscribedCourse) {
+    this.course = course;
+  }
+
+  public getRow(): any[] {
+    return [
+      this.course.title,
+      this.course.url,
+      this.course.num_lectures,
+      this.course.estimated_content_length,
+      this.course.last_update_date,
+      this.course.num_subscribers,
+      this.course.num_reviews,
+      this.course.rating,
+      this.course.completion_ratio,
+      this.course.is_draft,
+    ];
+  }
+}
