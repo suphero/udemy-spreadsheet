@@ -38,3 +38,5 @@ jobs:
           clientSecret: ${{ secrets.CLASP_CLIENT_SECRET }}
           scriptId: ${{ secrets.CLASP_SCRIPT_ID }}
           command: 'deploy'
+          rootDir: 'src'
+          description: 'Github Action'

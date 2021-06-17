@@ -59,7 +59,7 @@ export interface ISubscribedCourse {
 }
 
 export class WishlistEntity {
-  course: IWishlistedCourse;
+  private course: IWishlistedCourse;
 
   constructor(course: IWishlistedCourse) {
     this.course = course;
@@ -76,12 +76,12 @@ export class WishlistEntity {
       this.course.num_reviews,
       this.course.rating,
       this.course.discount?.price?.amount || this.course.price_detail?.amount,
-    ]
+    ];
   }
 }
 
 export class SubscriptionEntity {
-  course : ISubscribedCourse;
+  private course : ISubscribedCourse;
 
   constructor(course: ISubscribedCourse) {
     this.course = course;
