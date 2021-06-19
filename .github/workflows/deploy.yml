@@ -25,10 +25,17 @@ jobs:
             -Dsonar.organization=suphero
             -Dsonar.projectKey=udemy-spreadsheet
   clasp:
-    name: clasp deploy
+    name: Clasp
     # needs: sonarcloud
     runs-on: ubuntu-latest
     steps:
+      - uses: namaggarwal/clasp-token-action@v0.0.1
+        with:
+          client-id: ${{ secrets.CLASP_CLIENT_ID }}
+          client-secret: ${{ secrets.CLASP_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CLASP_REFRESH_TOKEN }}
+      - run: clasp push
+      - run: clasp deploy
       - uses: daikikatsuragawa/clasp-action@v1
         with:
           accessToken: ${{ secrets.CLASP_ACCESS_TOKEN }}
