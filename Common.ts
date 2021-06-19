@@ -1,4 +1,6 @@
-export function prepareSheet(sheetName: string): GoogleAppsScript.Spreadsheet.Sheet {
+import { ISubscribedCourse, ISubscriptionEntity, IWishlistedCourse, IWishlistEntity } from './Types';
+
+function prepareSheet(sheetName: string): GoogleAppsScript.Spreadsheet.Sheet {
   const spreadSheet = SpreadsheetApp.getActive();
   const oldSheet = spreadSheet.getSheetByName(sheetName);
   let newSheet: GoogleAppsScript.Spreadsheet.Sheet;
@@ -13,28 +15,99 @@ export function prepareSheet(sheetName: string): GoogleAppsScript.Spreadsheet.Sh
   return newSheet;
 }
 
-export function prepareHeader(sheet: GoogleAppsScript.Spreadsheet.Sheet, header: any[]) {
+function prepareHeader(sheet: GoogleAppsScript.Spreadsheet.Sheet, header: any[]) {
   appendRow(sheet, header, 1);
 }
 
-export function appendRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, rows: any[], row: number) {
+function appendRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, rows: any[], row: number) {
   const newData = [];
   newData.push(rows);
   sheet.getRange(row, 1, 1, rows.length).setValues(newData);
 }
 
-export function getToken() {
+function getToken() {
   const properties = PropertiesService.getUserProperties();
   return properties.getProperty('token');
 }
 
-export function setToken(token: string) {
+function setToken(token: string) {
   const properties = PropertiesService.getUserProperties();
   properties.setProperty('token', token);
 }
 
-export function checkTokenExistence() {
+function checkTokenExistence() {
   const token = getToken();
   if (token !== null) { return; }
   throw (getText('bearer_token_not_exist'));
 }
+
+function mapToSubscriptionEntity(course: ISubscribedCourse): ISubscriptionEntity {
+  return {
+    completion_ratio: course.completion_ratio,
+    estimated_content_length: course.estimated_content_length,
+    is_draft: course.is_draft,
+    last_update_date: course.last_update_date,
+    num_lectures: course.num_lectures,
+    num_reviews: course.num_reviews,
+    num_subscribers: course.num_subscribers,
+    rating: course.rating,
+    title: course.title,
+    url: course.url,
+  };
+}
+
+function getSubscriptionRow(entity: ISubscriptionEntity) {
+  return [
+    entity.title,
+    entity.url,
+    entity.num_lectures,
+    entity.estimated_content_length,
+    entity.last_update_date,
+    entity.num_subscribers,
+    entity.num_reviews,
+    entity.rating,
+    entity.completion_ratio,
+    entity.is_draft,
+  ];
+}
+
+function mapToWishlistEntity(course: IWishlistedCourse): IWishlistEntity {
+  return {
+    estimated_content_length: course.estimated_content_length,
+    last_update_date: course.last_update_date,
+    num_published_lectures: course.num_published_lectures,
+    num_reviews: course.num_reviews,
+    num_subscribers: course.num_subscribers,
+    price: course.discount?.price?.amount || course.price_detail?.amount,
+    rating: course.rating,
+    title: course.title,
+    url: course.url,
+  };
+}
+
+function getWishlistRow(entity: IWishlistEntity) {
+  return [
+    entity.title,
+    entity.url,
+    entity.num_published_lectures,
+    entity.estimated_content_length,
+    entity.last_update_date,
+    entity.num_subscribers,
+    entity.num_reviews,
+    entity.rating,
+    entity.price,
+  ];
+}
+
+export {
+  appendRow,
+  checkTokenExistence,
+  getSubscriptionRow,
+  getWishlistRow,
+  getToken,
+  mapToSubscriptionEntity,
+  mapToWishlistEntity,
+  prepareHeader,
+  prepareSheet,
+  setToken,
+};

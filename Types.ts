@@ -1,18 +1,18 @@
-export interface IPriceDetail {
+interface IPriceDetail {
   amount: number;
   currency: string;
   price_string: string;
   currency_symbol: string;
 }
 
-export interface IPrice {
+interface IPrice {
   amount: number;
   currency: string;
   price_string: string;
   currency_symbol: string;
 }
 
-export interface IDiscount {
+interface IDiscount {
   price_serve_tracking_id: string;
   price: IPrice;
   has_discount_saving: boolean;
@@ -22,7 +22,7 @@ export interface IDiscount {
   is_public: boolean;
 }
 
-export interface IWishlistedCourse {
+interface IWishlistedCourse {
   _class: string;
   id: number;
   title: string;
@@ -43,7 +43,7 @@ export interface IWishlistedCourse {
   last_update_date: string;
 }
 
-export interface ISubscribedCourse {
+interface ISubscribedCourse {
   _class: string;
   id: number;
   title: string;
@@ -58,47 +58,37 @@ export interface ISubscribedCourse {
   is_draft: boolean;
 }
 
-export class WishlistEntity {
-  private course: IWishlistedCourse;
-
-  constructor(course: IWishlistedCourse) {
-    this.course = course;
-  }
-
-  public getRow(): any[] {
-    return [
-      this.course.title,
-      this.course.url,
-      this.course.num_published_lectures,
-      this.course.estimated_content_length,
-      this.course.last_update_date,
-      this.course.num_subscribers,
-      this.course.num_reviews,
-      this.course.rating,
-      this.course.discount?.price?.amount || this.course.price_detail?.amount,
-    ];
-  }
+interface IWishlistEntity {
+  estimated_content_length: number;
+  last_update_date: string;
+  num_published_lectures: number;
+  num_reviews: number;
+  num_subscribers: number;
+  price: number;
+  rating: number;
+  title: string;
+  url: string;
 }
 
-export class SubscriptionEntity {
-  private course : ISubscribedCourse;
-
-  constructor(course: ISubscribedCourse) {
-    this.course = course;
-  }
-
-  public getRow(): any[] {
-    return [
-      this.course.title,
-      this.course.url,
-      this.course.num_lectures,
-      this.course.estimated_content_length,
-      this.course.last_update_date,
-      this.course.num_subscribers,
-      this.course.num_reviews,
-      this.course.rating,
-      this.course.completion_ratio,
-      this.course.is_draft,
-    ];
-  }
+interface ISubscriptionEntity {
+  completion_ratio: number;
+  estimated_content_length: number;
+  is_draft: boolean;
+  last_update_date: string;
+  num_lectures: number;
+  num_reviews: number;
+  num_subscribers: number;
+  rating: number;
+  title: string;
+  url: string;
 }
+
+export {
+  IDiscount,
+  IPrice,
+  IPriceDetail,
+  ISubscribedCourse,
+  ISubscriptionEntity,
+  IWishlistEntity,
+  IWishlistedCourse,
+};

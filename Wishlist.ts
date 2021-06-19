@@ -1,8 +1,15 @@
-import { appendRow, checkTokenExistence, prepareHeader, prepareSheet } from './Common';
+import {
+  appendRow,
+  checkTokenExistence,
+  getWishlistRow,
+  mapToWishlistEntity,
+  prepareHeader,
+  prepareSheet,
+} from './Common';
 import { getWishlist } from './ServiceWrapper';
-import { IWishlistedCourse, WishlistEntity } from './Types';
+import { IWishlistedCourse } from './Types';
 
-export function updateWishlist() {
+function updateWishlist() {
   checkTokenExistence();
   const data = getWishlist();
   const header = getWishlistHeader();
@@ -34,7 +41,8 @@ function prepareWishlistData(sheet: GoogleAppsScript.Spreadsheet.Sheet, data: IW
 }
 
 function appendWishlistRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, result: IWishlistedCourse, row: number) {
-  const rows = new WishlistEntity(result).getRow();
+  const entity = mapToWishlistEntity(result);
+  const rows = getWishlistRow(entity);
   appendRow(sheet, rows, row);
 }
 
@@ -50,3 +58,7 @@ function setWishlistFilter(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
   const filterRange = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn());
   filterRange.createFilter();
 }
+
+export {
+  updateWishlist,
+};

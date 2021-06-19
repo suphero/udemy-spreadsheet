@@ -1,8 +1,15 @@
-import { appendRow, checkTokenExistence, prepareHeader, prepareSheet } from './Common';
+import {
+  appendRow,
+  checkTokenExistence,
+  getSubscriptionRow,
+  mapToSubscriptionEntity,
+  prepareHeader,
+  prepareSheet,
+} from './Common';
 import { getSubscription } from './ServiceWrapper';
-import { ISubscribedCourse, SubscriptionEntity } from './Types';
+import { ISubscribedCourse } from './Types';
 
-export function updateSubscriptionList() {
+function updateSubscriptionList() {
   checkTokenExistence();
   const data = getSubscription();
   const header = getSubscriptionHeader();
@@ -35,7 +42,8 @@ function prepareSubscriptionData(sheet: GoogleAppsScript.Spreadsheet.Sheet, data
 }
 
 function appendSubscriptionRow(sheet: GoogleAppsScript.Spreadsheet.Sheet, result: ISubscribedCourse, row: number) {
-  const rows = new SubscriptionEntity(result).getRow();
+  const entity = mapToSubscriptionEntity(result);
+  const rows = getSubscriptionRow(entity);
   appendRow(sheet, rows, row);
 }
 
@@ -64,3 +72,7 @@ function setSubscriptionFilter(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
   filter.setColumnFilterCriteria(9, completionRatioCriteria);
   filter.setColumnFilterCriteria(10, draftCriteria);
 }
+
+export {
+  updateSubscriptionList,
+};

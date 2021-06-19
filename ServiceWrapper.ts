@@ -3,7 +3,7 @@ import { ISubscribedCourse, IWishlistedCourse } from './Types';
 
 const apiBaseUrl = 'https://www.udemy.com/api-2.0';
 
-export function getWishlist(): IWishlistedCourse[] {
+function getWishlist(): IWishlistedCourse[] {
   const token = getToken();
   const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     contentType: 'application/json',
@@ -38,7 +38,7 @@ export function getWishlist(): IWishlistedCourse[] {
   return getWholeData(url, params);
 }
 
-export function getSubscription(): ISubscribedCourse[] {
+function getSubscription(): ISubscribedCourse[] {
   const token = getToken();
   const params: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     contentType: 'application/json',
@@ -89,3 +89,8 @@ function getWholeData(url: string, params: GoogleAppsScript.URL_Fetch.URLFetchRe
   while (url);
   return results;
 }
+
+export {
+  getSubscription,
+  getWishlist,
+};
