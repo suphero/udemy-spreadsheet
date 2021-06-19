@@ -4,6 +4,8 @@
   "description": "## Usage",
   "main": "index.js",
   "scripts": {
+    "clasp:deploy": "clasp deploy",
+    "clasp:push": "clasp push",
 		"tslint": "tslint --project tsconfig.json"
   },
   "repository": {
