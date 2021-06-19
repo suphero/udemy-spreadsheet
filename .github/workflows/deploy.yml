@@ -34,6 +34,8 @@ jobs:
           client-id: ${{ secrets.CLASP_CLIENT_ID }}
           client-secret: ${{ secrets.CLASP_CLIENT_SECRET }}
           refresh-token: ${{ secrets.CLASP_REFRESH_TOKEN }}
+      - run: ls
+      - run: npm ci
       - run: npm run clasp:push
       - run: npm run clasp:deploy
       - uses: daikikatsuragawa/clasp-action@v1
